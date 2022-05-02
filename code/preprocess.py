@@ -46,7 +46,7 @@ def save_icon_data(icons, data_path, package_size=100000):
             cPickle.dump(icons[p*package_size:(p+1)*package_size], f, protocol=cPickle.HIGHEST_PROTOCOL)
 
 icons = load_icon_data('LLD-icon', single_file=1)
-for i in range(100):
+for i in range(20):
     plt.imshow(icons[i])
     plt.show()
 # print(np.shape(icons))

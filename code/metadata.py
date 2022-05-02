@@ -3,4 +3,7 @@ import numpy as np
 import os
 import pickle as cPickle
 
-Can you see this?
+with open("LLD-icon-names.pkl", 'rb') as f:
+    icon_names = cPickle.load(f, encoding='latin1')
+
+print(icon_names[:5])
