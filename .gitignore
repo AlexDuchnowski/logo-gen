@@ -1,7 +1,7 @@
 # Project-specific files
 LLD-icon/
 images/
-LLD-logo_metadata.pkl
+LLD*.*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
