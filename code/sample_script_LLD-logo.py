@@ -1,5 +1,6 @@
 import numpy as np
 import h5py
+import tensorflow as tf
 
 # simple way to load the complete dataset
 i = 0
@@ -22,8 +23,8 @@ def make_generator(file_path, batch_size, label_name=None):
         images = np.zeros((batch_size, 3, 400, 400), dtype='int32')
         labels = np.zeros(batch_size, dtype='int32')
         indices = range(len(hdf5_file['data']))
-        random_state = np.random.RandomState(epoch_count[0])
-        random_state.shuffle(indices)
+        # random_state = np.random.RandomState(epoch_count[0])
+        # random_state.shuffle(indices)
         epoch_count[0] += 1
         for n, i in enumerate(indices):
             shape = hdf5_file['shapes'][i]
@@ -35,6 +36,13 @@ def make_generator(file_path, batch_size, label_name=None):
                 yield (images, labels)
     return get_epoch
 
-data_generator = make_generator(file_path='twitter_dataset_clean.hdf5', batch_size=64, label_name='labels/resnet/rc_64')
-image_batch = data_generator.next()
-single_image = image_batch[0]
+
+hdf5_file = h5py.File('LLD-logo.hdf5', 'r')
+# NCHW -> NHWC
+trans = tf.transpose(hdf5_file['data'][:5], [0, 2, 3, 1])
+print(tf.image.resize(trans, [32, 32]))
+
+# data_generator = make_generator(file_path='LLD-logo.hdf5', batch_size=64, label_name='labels/resnet/rc_64')()
+# image_batch, labels_batch = next(data_generator)
+# single_image = image_batch[0]
+# print(single_image)
