@@ -12,7 +12,7 @@ with open("../LLD-logo_metadata.pkl", 'rb') as f:
 
 myObject = metadata["beautiful-sail"]["user_object"]
 myStr = str(myObject)
-match = re.search(myStr, "description:[a-zA-Z\s]+friends_count")
+match = re.search(myStr, "description.+friends_count")
 if match:
   print('found', match.group()) ## 'found word:cat'
 else:
