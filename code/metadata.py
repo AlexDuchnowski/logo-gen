@@ -12,7 +12,8 @@ with open("../LLD-logo_metadata.pkl", 'rb') as f:
     metadata = cPickle.load(f, encoding='latin1')
 
 print(list(metadata.keys())[:100])
-description = vars(metadata["dna"]["user_object"])["description"]
+description = vars(metadata["google"]["user_object"])["description"]
+print(metadata["dna"]["user_object"])
 # translator = Translator()
 # print(type(description))
 # translated = translator.translate(str(description))
@@ -23,5 +24,5 @@ description = vars(metadata["dna"]["user_object"])["description"]
 #         print(word)
 #     else:
 #         print("no")
-pp.pprint(description)
+#pp.pprint(description)
 #pp.pprint(translated)
