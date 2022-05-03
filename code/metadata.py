@@ -10,3 +10,4 @@ with open("../LLD-logo_metadata.pkl", 'rb') as f:
 
 print(type(metadata["060608"]));
 pp.pprint(metadata["060608"]["user_object"]);
+pp.pprint(metadata["060608"]["user_object"]["description"]);
