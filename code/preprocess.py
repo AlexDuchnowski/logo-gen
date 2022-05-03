@@ -5,6 +5,9 @@ import matplotlib.pyplot as plt
 import json
 
 
+def data_generator(data_file_path, batch_size):
+    hdf5_file = h5py.File(data_file_path, 'r')
+
 def get_data(filepath):
     # return a generator that can be iterated through to get subsequent batches
     # NHWC transpose, resizing, and normalization of pixel values for images
@@ -14,18 +17,19 @@ def get_data(filepath):
     # metadata = unpickle(metadata_file_path)
     hdf5_file = h5py.File(filepath, 'r')
     # NCHW -> NHWC
-    print(hdf5_file['meta_data']['names'][:5])
-    print(hdf5_file['meta_data']['twitter']['ids'][:5])
-    users = hdf5_file['meta_data']['twitter']['user_objects'][:5]
-    print([json.loads(user)['description'] for user in users])
-    print([json.loads(user)['name'] for user in users])
+    # print(hdf5_file['meta_data']['names'][:5])
+    # print(hdf5_file['meta_data']['twitter']['ids'][:5])
+    # users = hdf5_file['meta_data']['twitter']['user_objects'][:5]
+    # print([json.loads(user)['description'] for user in users])
+    # print([json.loads(user)['name'] for user in users])
+    print(len(hdf5_file['data']))
     # images = tf.transpose(hdf5_file['data'][:5], [0, 2, 3, 1])
     # descriptions = hdf5_file['meta_data/user_object']['user_object'][:5]
     # print(descriptions)
     # # descriptions = tf.convert_to_tensor([vars(user["user_object"])["description"] for user in metadata.values()])[:5]
     # # names = tf.convert_to_tensor([vars(user["user_object"])["name"] for user in metadata.values()])[:5]
     # return images, descriptions #, names
-    
+
 get_data('LLD-logo.hdf5')
 # print(images.shape)
 # print(descriptions.shape)
