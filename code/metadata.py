@@ -13,7 +13,7 @@ with open("../LLD-logo_metadata.pkl", 'rb') as f:
 
 #print(list(metadata.keys())[:100])
 #description = vars(metadata["google"]["user_object"])["description"]
-print(vars(metadata["google"]["user_object"]))
+pp.pprint(vars(metadata["google"]["user_object"]))
 # translator = Translator()
 # print(type(description))
 # translated = translator.translate(str(description))
