@@ -11,5 +11,7 @@ with open("../LLD-logo_metadata.pkl", 'rb') as f:
 
 myObject = metadata["beautiful-sail"]["user_object"]
 myStr = str(myObject)
+res = json.loads(myStr)
 
-pp.pprint(myStr)
+pp.pprint(res)
+pp.pprint(res["description"])
