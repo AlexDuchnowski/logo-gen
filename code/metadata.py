@@ -5,13 +5,16 @@ import pickle as cPickle
 import pprint 
 import json
 import re
+from googletrans import Translator
 pp = pprint.PrettyPrinter(indent=2)
 
 with open("../LLD-logo_metadata.pkl", 'rb') as f:
     metadata = cPickle.load(f, encoding='latin1')
 
-
-description = vars(metadata["Google"]["user_object"])["description"]
+print(list(metadata.keys())[:100])
+description = vars(metadata["dna"]["user_object"])["description"]
+translator = Translator()
+translated = translator.translate(description)
 # words = description.split(" ");
 # #words = [word if word.isalpha() for word in words]
 # for word in words:
@@ -20,6 +23,4 @@ description = vars(metadata["Google"]["user_object"])["description"]
 #     else:
 #         print("no")
 pp.pprint(description)
-
-description = vars(metadata["greenstyle"]["user_object"])["description"]
-pp.pprint(description)  
+pp.pprint(translated)
