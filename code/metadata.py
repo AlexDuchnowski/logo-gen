@@ -10,4 +10,6 @@ with open("../LLD-logo_metadata.pkl", 'rb') as f:
     metadata = cPickle.load(f, encoding='latin1')
 
 myObject = metadata["beautiful-sail"]["user_object"]
-pp.pprint(dict(myObject)["description"])
+myStr = str(myObject)
+
+pp.pprint(myStr)
