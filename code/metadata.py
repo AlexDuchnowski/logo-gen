@@ -13,9 +13,9 @@ with open("../LLD-logo_metadata.pkl", 'rb') as f:
 
 print(list(metadata.keys())[:100])
 description = vars(metadata["dna"]["user_object"])["description"]
-translator = Translator()
-print(type(description))
-translated = translator.translate(str(description))
+# translator = Translator()
+# print(type(description))
+# translated = translator.translate(str(description))
 # words = description.split(" ");
 # #words = [word if word.isalpha() for word in words]
 # for word in words:
@@ -23,5 +23,5 @@ translated = translator.translate(str(description))
 #         print(word)
 #     else:
 #         print("no")
-#pp.pprint(description)
-pp.pprint(translated)
+pp.pprint(description)
+#pp.pprint(translated)
