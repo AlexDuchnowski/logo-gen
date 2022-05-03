@@ -11,7 +11,7 @@ with open("../LLD-logo_metadata.pkl", 'rb') as f:
     metadata = cPickle.load(f, encoding='latin1')
 
 description = vars(metadata["beautiful-sail"]["user_object"])["description"]
-words = description.split();
+words = description.split(" ");
 #words = [word if word.isalpha() for word in words]
 for word in words:
     if word.isalpha():
