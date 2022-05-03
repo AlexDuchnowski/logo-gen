@@ -4,6 +4,7 @@ import os
 import pickle as cPickle
 import pprint 
 import json
+import re
 pp = pprint.PrettyPrinter(indent=2)
 
 with open("../LLD-logo_metadata.pkl", 'rb') as f:
@@ -11,7 +12,12 @@ with open("../LLD-logo_metadata.pkl", 'rb') as f:
 
 myObject = metadata["beautiful-sail"]["user_object"]
 myStr = str(myObject)
-res = json.loads(myStr)
+match = re.search(myStr, "description:[a-zA-Z\s]+friends_count")
+if match:
+  print('found', match.group()) ## 'found word:cat'
+else:
+  print('did not find')
+#res = json.loads(myStr)
 
-pp.pprint(res)
-pp.pprint(res["description"])
+# pp.pprint(res)
+# pp.pprint(res["description"])
