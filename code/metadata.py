@@ -2,7 +2,7 @@ import math
 import numpy as np
 import os
 import pickle as cPickle
-import pprint as pp
+import pprint 
 pp = pprint.PrettyPrinter(indent=2)
 
 with open("../LLD-logo_metadata.pkl", 'rb') as f:
