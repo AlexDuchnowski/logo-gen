@@ -1,31 +1,35 @@
-from __future__ import division
-from glob import glob
-import math
 import numpy as np
 import h5py
 import tensorflow as tf
-import os
-import pickle as cPickle
 import matplotlib.pyplot as plt
+import json
 
-def unpickle(file):
-    with open("../LLD-logo_metadata.pkl", 'rb') as f:
-        metadata = cPickle.load(f, encoding='latin1')
-    return metadata
 
-def getData(metadata_file_path, image_file_path):
-    metadata = unpickle(metadata_file_path)
-    hdf5_file = h5py.File(image_file_path, 'r')
+def get_data(filepath):
+    # return a generator that can be iterated through to get subsequent batches
+    # NHWC transpose, resizing, and normalization of pixel values for images
+    # create vocab for descriptions and replace words with corresponding ids (maybe UNK some words)
+    # convert company names to ASCII
+
+    # metadata = unpickle(metadata_file_path)
+    hdf5_file = h5py.File(filepath, 'r')
     # NCHW -> NHWC
-    images = tf.transpose(hdf5_file['data'], [0, 2, 3, 1])
-    descriptions = tf.convert_to_tensor([vars(user["user_object"])["descriptions"] for user in metadata.values()])
-    names = tf.convert_to_tensor([vars(user["user_object"])["name"] for user in metadata.values()])
-    return (images, descriptions, names)
+    print(hdf5_file['meta_data']['names'][:5])
+    print(hdf5_file['meta_data']['twitter']['ids'][:5])
+    users = hdf5_file['meta_data']['twitter']['user_objects'][:5]
+    print([json.loads(user)['description'] for user in users])
+    print([json.loads(user)['name'] for user in users])
+    # images = tf.transpose(hdf5_file['data'][:5], [0, 2, 3, 1])
+    # descriptions = hdf5_file['meta_data/user_object']['user_object'][:5]
+    # print(descriptions)
+    # # descriptions = tf.convert_to_tensor([vars(user["user_object"])["description"] for user in metadata.values()])[:5]
+    # # names = tf.convert_to_tensor([vars(user["user_object"])["name"] for user in metadata.values()])[:5]
+    # return images, descriptions #, names
     
-(images, descriptions, names) = getData("../LLD-logo_metadata.pkl",'../LLD-logo.hdf5')
-print(images.shape)
-print(descriptions.shape)
-print(names.shape)
+get_data('LLD-logo.hdf5')
+# print(images.shape)
+# print(descriptions.shape)
+# print(names.shape)
 
 # # code adapted from: https://data.vision.ee.ethz.ch/sagea/lld/
 
