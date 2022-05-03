@@ -12,14 +12,5 @@ with open("../LLD-logo_metadata.pkl", 'rb') as f:
 
 description = vars(metadata["beautiful-sail"]["user_object"])["description"]
 words = description.split();
-
-# myStr = str(myObject)
-# match = re.search(myStr, "description.+friends_count")
-# if match:
-#   print('found', match.group()) ## 'found word:cat'
-# else:
-#   print('did not find')
-# #res = json.loads(myStr)
-
-# pp.pprint(res)
-# pp.pprint(res["description"])
+words = [word if word.isalpha for word in words]
+pp.pprint(words)
