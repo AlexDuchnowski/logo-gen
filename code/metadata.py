@@ -12,5 +12,5 @@ with open("../LLD-logo_metadata.pkl", 'rb') as f:
 
 description = vars(metadata["beautiful-sail"]["user_object"])["description"]
 words = description.split();
-words = [word if word.isalpha for word in words]
+words = [word if word.isalpha() for word in words]
 pp.pprint(words)
