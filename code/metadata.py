@@ -11,6 +11,8 @@ with open("../LLD-logo_metadata.pkl", 'rb') as f:
     metadata = cPickle.load(f, encoding='latin1')
 
 description = vars(metadata["beautiful-sail"]["user_object"])["description"]
+words = description.split();
+
 # myStr = str(myObject)
 # match = re.search(myStr, "description.+friends_count")
 # if match:
