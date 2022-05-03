@@ -400,7 +400,7 @@ class DCGAN(object):
                         save_images(samples, [manifold_h, manifold_w],
                                     './{}/train_{:02d}_{:04d}.png'.format(config.sample_dir, epoch, idx))
                         print("[Sample] d_loss: %.8f, g_loss: %.8f" % (d_loss, g_loss))
-                    except Exception e:
+                    except Exception as e:
                         print("Error saving sample image:")
                         print e
                 # save checkpoint
