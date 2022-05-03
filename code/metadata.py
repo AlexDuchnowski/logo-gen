@@ -10,8 +10,8 @@ pp = pprint.PrettyPrinter(indent=2)
 with open("../LLD-logo_metadata.pkl", 'rb') as f:
     metadata = cPickle.load(f, encoding='latin1')
 
-print(list(metadata.keys())[:100])
-description = vars(metadata["dna"]["user_object"])["description"]
+
+description = vars(metadata["Google"]["user_object"])["description"]
 # words = description.split(" ");
 # #words = [word if word.isalpha() for word in words]
 # for word in words:
@@ -20,3 +20,6 @@ description = vars(metadata["dna"]["user_object"])["description"]
 #     else:
 #         print("no")
 pp.pprint(description)
+
+description = vars(metadata["greenstyle"]["user_object"])["description"]
+pp.pprint(description)  
