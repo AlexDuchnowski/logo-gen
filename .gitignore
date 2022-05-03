@@ -3,7 +3,7 @@ LLD-icon/
 images/
 LLD*.*
 logo_env/
-LLDsample/
+code/checkpoint/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
