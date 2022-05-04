@@ -46,6 +46,7 @@ def process_descriptions(descriptions):
     for desc in descriptions:
         # TRANSLATE HERE - ignore this placeholder stuff
         lengths = [len(token) for token in desc.split()]
+        print(lengths)
         if len(lengths) < WINDOW_SIZE:
             lengths.extend([0 for _ in range(WINDOW_SIZE - len(lengths))])
         else:
