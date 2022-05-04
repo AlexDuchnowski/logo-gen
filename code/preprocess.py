@@ -67,19 +67,11 @@ def process_names(names):
         padded_names.append(ascii)
     return tf.convert_to_tensor(padded_names)
 
-<<<<<<< HEAD
 gen = make_input_generator('LLD-logo.hdf5', 128,1)
 images, descriptions, names = next(gen)
-print(images)
+#print(images)
 print(descriptions)
-print(names)
-=======
-# gen = make_input_generator('LLD-logo.hdf5', 128, epochs=1)
-# images, descriptions, names = next(gen)
-# print(images)
-# print(descriptions)
-# print(names)
->>>>>>> f607e75c11c6c142b36d33c38dc11f4f5c60fbef
+#print(names)
 
 # plt.imshow(images[0])
 # plt.savefig('img.png')
