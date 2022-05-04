@@ -49,7 +49,7 @@ def process_descriptions(descriptions):
         # TRANSLATE HERE - ignore this placeholder stuff
         lengths = translator.translate(desc).text.lower().split()
         if len(lengths) < WINDOW_SIZE:
-            lengths.extend([0 for _ in range(WINDOW_SIZE - len(lengths))])
+            lengths.extend(['0' for _ in range(WINDOW_SIZE - len(lengths))])
         else:
             lengths = lengths[:WINDOW_SIZE]
         padded_descriptions.append(lengths)
