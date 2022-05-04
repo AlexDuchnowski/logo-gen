@@ -32,7 +32,7 @@ def make_input_generator(data_file_path, batch_size, epochs):
             names = process_names(names)
 
             # print(images)
-            yield images #, descriptions, names
+            yield images, descriptions, names
 
 def process_images(images):
     # resizing and normalization of pixel values for images
