@@ -53,7 +53,7 @@ def process_descriptions(descriptions):
         else:
             lengths = lengths[:WINDOW_SIZE]
         padded_descriptions.append(lengths)
-        print(padded_descriptions)
+        print(len(padded_descriptions))
         #Can't convert Python sequence with mixed types to Tensor
     return tf.convert_to_tensor(padded_descriptions)
 
