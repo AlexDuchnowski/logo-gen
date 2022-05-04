@@ -7,16 +7,16 @@ import json
 
 WINDOW_SIZE = 30
 
-def make_generator(data_file_path, batch_size):
+def make_input_generator(data_file_path, batch_size, epochs):
     """
-    Returns a function that, when called without arguments, returns a generator on batches of data.
+    Returns a generator on batches of data.
 
     :param data_file_path: file path to the hdf5 file containing the data
     :param batch_size: batch size for splitting up the model inputs
     :return: the final generator yields (images, descriptions, names)
     """
     hdf5_file = h5py.File(data_file_path, 'r')
-    def get_epoch():
+    for n in range(epochs):
         for i in range(0, len(hdf5_file['data']), batch_size):
             if i + batch_size >= len(hdf5_file['data']):
                 break
@@ -32,7 +32,6 @@ def make_generator(data_file_path, batch_size):
             names = process_names(names)
 
             yield images, descriptions, names
-    return get_epoch
 
 def process_images(images):
     # resizing and normalization of pixel values for images
@@ -66,7 +65,7 @@ def process_names(names):
         padded_names.append(ascii)
     return tf.convert_to_tensor(padded_names)
 
-gen = make_generator('LLD-logo.hdf5', 128)()
+gen = make_input_generator('LLD-logo.hdf5', 128)
 images, descriptions, names = next(gen)
 print(images)
 print(descriptions)
