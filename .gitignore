@@ -4,6 +4,8 @@ images/
 LLD*.*
 logo_env/
 LLDsample/
+*.png
+*.jpg
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
