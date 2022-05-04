@@ -48,12 +48,13 @@ def process_descriptions(descriptions):
     for desc in descriptions:
         # TRANSLATE HERE - ignore this placeholder stuff
         lengths = translator.translate(desc).text.lower().split()
-        print(lengths)
         if len(lengths) < WINDOW_SIZE:
             lengths.extend([0 for _ in range(WINDOW_SIZE - len(lengths))])
         else:
             lengths = lengths[:WINDOW_SIZE]
         padded_descriptions.append(lengths)
+        print(padded_descriptions)
+        #Can't convert Python sequence with mixed types to Tensor
     return tf.convert_to_tensor(padded_descriptions)
 
 def process_names(names):
