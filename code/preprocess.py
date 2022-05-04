@@ -3,7 +3,7 @@ import h5py
 import tensorflow as tf
 import matplotlib.pyplot as plt
 import json
-
+import googletrans 
 
 WINDOW_SIZE = 30
 
@@ -43,10 +43,11 @@ def process_images(images):
 def process_descriptions(descriptions):
     # create vocab for descriptions and replace words with corresponding ids (maybe UNK some words)
     # REPLACE WITH REAL PREPROCESSING
+    translator = googletrans.Translator()
     padded_descriptions = []
     for desc in descriptions:
         # TRANSLATE HERE - ignore this placeholder stuff
-        lengths = [len(token) for token in desc.split()]
+        lengths = [translator.translate(token) for token in desc.split()]
         print(lengths)
         if len(lengths) < WINDOW_SIZE:
             lengths.extend([0 for _ in range(WINDOW_SIZE - len(lengths))])
