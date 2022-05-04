@@ -1,7 +1,6 @@
 import tensorflow as tf
 from tensorflow.keras import layers
 from conv import conv_block, upsample_block
-from run import LATENT_DIM
 
 # based on: https://keras.io/examples/generative/wgan_gp/
 
@@ -20,6 +19,10 @@ class WGAN(tf.keras.Model):
         self.latent_dim = latent_dim
         self.d_steps = discriminator_extra_steps
         self.gp_weight = gp_weight
+
+    # shouldn't be used
+    def call(self, x):
+        return x
 
     def compile(self, d_optimizer, g_optimizer, d_loss_fn, g_loss_fn):
         super(WGAN, self).compile()
@@ -173,8 +176,8 @@ def get_critic_model():
     return c_model
 
 # FIGURE OUT HOW TO GET RID OF DROPOUT WHEN TESTING
-def get_generator_model():
-    noise = layers.Input(shape=(LATENT_DIM,))
+def get_generator_model(latent_size):
+    noise = layers.Input(shape=(latent_size,))
     x = layers.Dense(4 * 4 * 1024, use_bias=False)(noise)
     x = layers.BatchNormalization()(x)
     x = layers.LeakyReLU(0.2)(x)
@@ -222,8 +225,3 @@ def get_generator_model():
 
     g_model = tf.keras.models.Model(noise, x, name="generator")
     return g_model
-
-c_model = get_critic_model()
-c_model.summary()
-g_model = get_generator_model()
-g_model.summary()

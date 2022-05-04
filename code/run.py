@@ -1,10 +1,18 @@
 import tensorflow as tf
 from callback import GANMonitor
-from model import WGAN, c_model, g_model
+from model import WGAN, get_critic_model, get_generator_model
 from preprocess import make_input_generator
 
-BATCH_SIZE = 128
+BATCH_SIZE = 10
 LATENT_DIM = 128
+
+physical_devices = tf.config.list_physical_devices('GPU')
+tf.config.experimental.set_memory_growth(physical_devices[0], enable=True)
+
+c_model = get_critic_model()
+c_model.summary()
+g_model = get_generator_model(LATENT_DIM)
+g_model.summary()
 
 # Instantiate the optimizer for both networks
 # (learning_rate=0.0002, beta_1=0.5 are recommended)
@@ -53,4 +61,4 @@ gen = make_input_generator('LLD-logo.hdf5', BATCH_SIZE, epochs=1)
 
 # Start training the model.
 # THIS WON'T WORK AS IS BECAUSE THE GENERATOR YIELDS 3 SEPARATE THINGS
-wgan.fit(gen, callbacks=[cbk])
+wgan.fit(x=gen, callbacks=[cbk])
