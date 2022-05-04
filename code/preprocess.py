@@ -31,7 +31,8 @@ def make_input_generator(data_file_path, batch_size, epochs):
             descriptions = process_descriptions(descriptions)
             names = process_names(names)
 
-            yield images, descriptions, names
+            # print(images)
+            yield images #, descriptions, names
 
 def process_images(images):
     # resizing and normalization of pixel values for images
@@ -65,11 +66,11 @@ def process_names(names):
         padded_names.append(ascii)
     return tf.convert_to_tensor(padded_names)
 
-gen = make_input_generator('LLD-logo.hdf5', 128)
-images, descriptions, names = next(gen)
-print(images)
-print(descriptions)
-print(names)
+# gen = make_input_generator('LLD-logo.hdf5', 128, epochs=1)
+# images, descriptions, names = next(gen)
+# print(images)
+# print(descriptions)
+# print(names)
 
-plt.imshow(images[0])
-plt.savefig('img.png')
+# plt.imshow(images[0])
+# plt.savefig('img.png')
