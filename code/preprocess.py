@@ -62,10 +62,10 @@ def process_descriptions(descriptions):
     for desc in descriptions:
         # translate the different text to English
         description = translator.translate(desc).text
-        # tokenize the word
-        description = word_tokenize(description)
         # remove the punctuation
-        description = re.sub(r'[^\w\s]', '', description).split()
+        description = re.sub(r'[^\w\s]', '', description)
+        print(description)
+        description = word_tokenize(description)
         print(description)
         # remove stop words and make embbedings vector
         description = [model.wv[t] for t in description if not t in stopwords.words("english")]
