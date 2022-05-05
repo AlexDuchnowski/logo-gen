@@ -66,11 +66,12 @@ def process_descriptions(descriptions):
         description = re.sub(r'[^\w\s]', '', description).lower()
         description = word_tokenize(description)
         # remove stop words and make embbedings vector
-        description = [model.wv[t] for t in description if not t in stopwords.words("english")]
+        description = [model.wv[t] for t in description if not t in stopwords.words("english") and t in model.vocab]
         if len(description) < WINDOW_SIZE:
             description.extend([0 for _ in range(WINDOW_SIZE - len(description))])
         else:
             description = description[:WINDOW_SIZE]
+        print(description)
         padded_descriptions.append(description)
         padded_descriptions.append(description)
         padded_descriptions.append(description)
@@ -90,7 +91,6 @@ def process_names(names):
         padded_names.append(ascii)
     return tf.convert_to_tensor(padded_names)
 
-print(model.wv['propstack'])
 gen = make_input_generator('LLD-logo.hdf5', 128, epochs=1)
 images, descriptions, names = next(gen)
 print(images)
