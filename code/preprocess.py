@@ -67,12 +67,7 @@ def process_descriptions(descriptions):
         description = re.sub(r'[^\w\s]', '', description).lower()
         description = word_tokenize(description)
         # remove stop words and make embbedings vector
-        for word in description:
-            if word_vectors.__contains__(word):
-                print(f'not in: {word}')
-            else:
-                print(f'in: {word}')
-        description = [model.wv[t] for t in description if not t in stopwords.words("english") and word_vectors.__contains__(t)]
+        description = [model.wv[t] for t in description if not t in stopwords.words("english") and t in word_vectors]
         if len(description) < WINDOW_SIZE:
             description.extend([0 for _ in range(WINDOW_SIZE - len(description))])
         else:
@@ -81,6 +76,7 @@ def process_descriptions(descriptions):
         padded_descriptions.append(description)
         padded_descriptions.append(description)
         padded_descriptions.append(description)
+        print(padded_descriptions)
         #Can't convert Python sequence with mixed types to Tensor
     return tf.convert_to_tensor(padded_descriptions)
 
