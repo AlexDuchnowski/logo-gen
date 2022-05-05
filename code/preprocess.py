@@ -66,12 +66,14 @@ def process_descriptions(descriptions):
         # remove the punctuation
         description = re.sub(r'[^\w\s]', '', description).lower()
         description = word_tokenize(description)
-        print(description)
-        # for word in description:
-        #     if word_vectors.__contains__(word):
-        #         print(word)
-        #         print(model.wv[word])
-        # remove stop words and make embbedings vector
+        for word in description:
+            print(word)
+            if word_vectors.__contains__(word):
+                print(word)
+                print(model.wv[word])
+            else:
+                print("no")
+        #remove stop words and make embbedings vector
         description = [model.wv[t] for t in description if t not in stopwords.words("english") and word_vectors.__contains__(t)]
         if len(description) < WINDOW_SIZE:
             description.extend([0 for _ in range(WINDOW_SIZE - len(description))])
