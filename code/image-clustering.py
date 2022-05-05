@@ -1,6 +1,6 @@
 from tensorflow.keras.applications.resnet_v2 import ResNet50V2, preprocess_input
 from tensorflow.keras.models import Model
-import tensorflow_transform as tft
+from sklearn.decomposition import PCA
 import tensorflow as tf
 import numpy as np
 
@@ -32,6 +32,6 @@ def extractResNetFeatures(images):
 
 images = np.random.normal(128, 40, (50,224,224,3))
 extracted_images = extractResNetFeatures(images)
-reduced_images = tft.pca(extracted_images, 128)
+reduced_images = PCA(extracted_images, 128)
 
 

@@ -10,8 +10,8 @@ numpy==1.19.3
 periodictable==1.5.1
 tensorflow-gan==2.0.0
 tensorflow-hub==0.9.0
-tensorflow_transform==1.7.0
 imageio==2.9.0
 tqdm==4.48.2
 tweepy==4.8.0
 googletrans==3.1.0a0
+scikit-learn==1.0.2
