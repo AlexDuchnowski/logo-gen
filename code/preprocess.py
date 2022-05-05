@@ -66,13 +66,6 @@ def process_descriptions(descriptions):
         # remove the punctuation
         description = re.sub(r'[^\w\s]', '', description).lower()
         description = word_tokenize(description)
-        for word in description:
-            print(word)
-            if word_vectors.__contains__(word):
-                print(word)
-                print(model.wv[word])
-            else:
-                print("no")
         #remove stop words and make embbedings vector
         description = [model.wv[t] for t in description if t not in stopwords.words("english") and word_vectors.__contains__(t)]
         if len(description) < WINDOW_SIZE:
@@ -98,12 +91,12 @@ def process_names(names):
             ascii = ascii[:WINDOW_SIZE]
         padded_names.append(ascii)
     return tf.convert_to_tensor(padded_names)
-
-gen = make_input_generator('LLD-logo.hdf5', 128, epochs=1)
-images, descriptions, names = next(gen)
-print(images)
-print(descriptions)
-print(names)
+print(model.wv["music"])
+# gen = make_input_generator('LLD-logo.hdf5', 128, epochs=1)
+# images, descriptions, names = next(gen)
+# print(images)
+# print(descriptions)
+# print(names)
 
 # plt.imshow(images[0])
 # plt.savefig('img.png')
