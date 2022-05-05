@@ -3,6 +3,7 @@ from tensorflow.keras.models import Model
 from sklearn.decomposition import PCA
 import tensorflow as tf
 import numpy as np
+import h5py
 from kmeans import Kmeans
 
 def extract_resnet_features(images):
@@ -54,3 +55,21 @@ def cluster_images(images):
 
     # Return the clusters with same indices as image data
     return image_clusters
+
+def makeImageGenerator(data_file_path, batch_size, max_epoch=10):
+    hdf5_file = h5py.File(data_file_path, 'r')
+    epoch = 0
+    while epoch < max_epoch:
+        epoch += 1
+        for i in range(0, len(hdf5_file['data']), batch_size):
+            if i + batch_size >= len(hdf5_file['data']):
+                break
+
+            # transpose from NCHW to NHWC
+            images = tf.cast(tf.transpose(hdf5_file['data'][i:i+batch_size], [0, 2, 3, 1]), tf.int32)
+            images = tf.image.resize(images, [224, 224])
+            images = tf.cast(images, tf.float32) / 255
+            yield images
+
+gen = makeImageGenerator('LLD-logo.hdf5', 64)
+clusters = cluster_images(gen)
