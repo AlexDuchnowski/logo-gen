@@ -42,6 +42,8 @@ def cluster_images(images):
     extracted_images = np.array([])
     count = 0
     while image_batch is not None:
+        print(type(image_batch))
+        print(image_batch.shape)
         extracted_image_batch = extract_resnet_features(image_batch)
         np.append(extracted_images, extracted_image_batch)
         count += 128
@@ -62,18 +64,20 @@ def cluster_images(images):
     return image_clusters
 
 def makeImageGenerator(data_file_path, batch_size, max_epoch=10):
-    hdf5_file = h5py.File(data_file_path, 'r')
+    hdf5_file = h5py.File(data_file_path, 'r')['data'][:1000]
     epoch = 0
     while epoch < max_epoch:
         epoch += 1
-        for i in range(0, len(hdf5_file['data']), batch_size):
-            if i + batch_size >= len(hdf5_file['data']):
+        for i in range(0, len(hdf5_file), batch_size):
+            if i + batch_size >= len(hdf5_file):
                 break
             # transpose from NCHW to NHWC
-            images = tf.cast(tf.transpose(hdf5_file['data'][i:i+batch_size], [0, 2, 3, 1]), tf.int32)
+            images = tf.cast(tf.transpose(hdf5_file[i:i+batch_size], [0, 2, 3, 1]), tf.int32)
             images = tf.image.resize(images, [224, 224])
             images = tf.cast(images, tf.float32) / 255
             yield images
+            print(i)
+        print("e done")
 
 gen = makeImageGenerator('LLD-logo.hdf5', 128, 1)
 print("generator done")
