@@ -7,12 +7,17 @@ import json
 import googletrans 
 from gensim.models import Word2Vec
 from gensim.test.utils import common_texts
-import logging
-model = Word2Vec(sentences=common_texts, vector_size=100, window=5, min_count=1, workers=4)
+import nltk
+import re
+from nltk.corpus import stopwords
+nltk.download('stopwords')
+from nltk.tokenize import word_tokenize
+
+model = Word2Vec(sentences=common_texts, vector_size=64, window=5, min_count=1, workers=4)
 model.save("word2vec.model")
 model = Word2Vec.load("word2vec.model")
 
-WINDOW_SIZE = 30
+WINDOW_SIZE = 16
 
 def make_input_generator(data_file_path, batch_size, epochs):
     """
@@ -37,7 +42,6 @@ def make_input_generator(data_file_path, batch_size, epochs):
             images = process_images(images)
             descriptions = process_descriptions(descriptions)
             names = process_names(names)
-
             # print(images)
             yield images, descriptions, names
 
@@ -47,21 +51,32 @@ def process_images(images):
     images = tf.cast(images, tf.float32) / 255
     return images
 
+# convert the descriptions to a 64*64 tensor
 def process_descriptions(descriptions):
     # create vocab for descriptions and replace words with corresponding ids (maybe UNK some words)
     # REPLACE WITH REAL PREPROCESSING
     translator = googletrans.Translator()
     padded_descriptions = []
     model = Word2Vec.load("word2vec.model")
+
     for desc in descriptions:
-        # TRANSLATE HERE - ignore this placeholder stuff
-        lengths = translator.translate(desc).text.lower().split()
-        if len(lengths) < WINDOW_SIZE:
-            lengths.extend(['0' for _ in range(WINDOW_SIZE - len(lengths))])
+        # translate the different text to English
+        description = translator.translate(desc).text
+        # tokenize the word
+        description = word_tokenize(description)
+        # remove the punctuation
+        description = re.sub(r'[^\w\s]', '', description).split()
+        print(description)
+        # remove stop words and make embbedings vector
+        filtered_text = [model.wv[t] for t in description if not t in stopwords.words("english")]
+        if len(description) < WINDOW_SIZE:
+            description.extend(['0' for _ in range(WINDOW_SIZE - len(description))])
         else:
-            lengths = lengths[:WINDOW_SIZE]
-        padded_descriptions.append(lengths)
-    print(len(padded_descriptions))
+            description = description[:WINDOW_SIZE]
+        padded_descriptions.append(description)
+        padded_descriptions.append(description)
+        padded_descriptions.append(description)
+        padded_descriptions.append(description)
         #Can't convert Python sequence with mixed types to Tensor
     return tf.convert_to_tensor(padded_descriptions)
 
@@ -76,13 +91,13 @@ def process_names(names):
             ascii = ascii[:WINDOW_SIZE]
         padded_names.append(ascii)
     return tf.convert_to_tensor(padded_names)
-vector = model.wv['computer']
-print(vector)
-# gen = make_input_generator('LLD-logo.hdf5', 128, epochs=1)
-# images, descriptions, names = next(gen)
-# print(images)
-# print(descriptions)
-# print(names)
+
+
+gen = make_input_generator('LLD-logo.hdf5', 128, epochs=1)
+images, descriptions, names = next(gen)
+print(images)
+print(descriptions)
+print(names)
 
 # plt.imshow(images[0])
 # plt.savefig('img.png')
