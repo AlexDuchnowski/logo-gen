@@ -30,10 +30,14 @@ def extractResNetFeatures(images):
     return customized_model.predict(inputs)
 
 
-images = np.random.normal(128, 40, (50,224,224,3))
+images = np.random.normal(128, 40, (32,224,224,3))
+print("initialize done")
 extracted_images = extractResNetFeatures(images)
+print("resnet done")
 reduced_images = PCA(extracted_images, 128)
+print("pca done")
 classifier = Kmeans(num_clusters=32)
 classifier.train(reduced_images)
+print("kmeans train done")
 image_clusters = classifier.predict(reduced_images)
-
+print(image_clusters)
