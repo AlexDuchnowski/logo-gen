@@ -3,6 +3,7 @@ from tensorflow.keras.models import Model
 from sklearn.decomposition import PCA
 import tensorflow as tf
 import numpy as np
+from kmeans import Kmeans
 
 
 
@@ -29,9 +30,10 @@ def extractResNetFeatures(images):
     return customized_model.predict(inputs)
 
 
-
 images = np.random.normal(128, 40, (50,224,224,3))
 extracted_images = extractResNetFeatures(images)
 reduced_images = PCA(extracted_images, 128)
-
+classifier = Kmeans(num_clusters=32)
+classifier.train(reduced_images)
+image_clusters = classifier.predict(reduced_images)
 
