@@ -40,10 +40,12 @@ def cluster_images(images):
     # Apply ResNet feature extraction to each batch
     image_batch = next(images)
     extracted_images = np.array([])
+    count = 0
     while image_batch is not None:
         extracted_image_batch = extract_resnet_features(image_batch)
         np.append(extracted_images, extracted_image_batch)
-        print("extracted batch")
+        count += 128
+        print(f"extracted {count}")
     print("extracted all")
     # Fit then apply pply sklearn PCA reduction to extracted images
     reduction = PCA(n_components=64)
@@ -62,13 +64,11 @@ def cluster_images(images):
 def makeImageGenerator(data_file_path, batch_size, max_epoch=10):
     hdf5_file = h5py.File(data_file_path, 'r')
     epoch = 0
-    print(len(hdf5_file['data']))
     while epoch < max_epoch:
         epoch += 1
         for i in range(0, len(hdf5_file['data']), batch_size):
             if i + batch_size >= len(hdf5_file['data']):
                 break
-            i+=120000
             # transpose from NCHW to NHWC
             images = tf.cast(tf.transpose(hdf5_file['data'][i:i+batch_size], [0, 2, 3, 1]), tf.int32)
             images = tf.image.resize(images, [224, 224])
