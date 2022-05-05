@@ -39,13 +39,16 @@ def cluster_images(images):
     """
     # Apply ResNet feature extraction to each batch
     image_batch = next(images)
-    extracted_images = np.array([[]])
+    extracted_images = None
     count = 0
     while True:
         print(type(image_batch))
         print(image_batch.shape)
         extracted_image_batch = extract_resnet_features(image_batch)
-        np.append(extracted_images, extracted_image_batch)
+        if extracted_images is None:
+            extracted_images = extracted_image_batch
+        else:
+            np.append(extracted_images, extracted_image_batch)
         count += 128
         print(f"extracted {count}")
         try:
