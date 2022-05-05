@@ -6,4 +6,8 @@ when it is not long enough, fill in padding
 
 2d: name, n* names
 
+## Resources
+
+https://keras.io/examples/generative/wgan_gp/
+
 
