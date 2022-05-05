@@ -68,9 +68,9 @@ def process_descriptions(descriptions):
         description = re.sub(r'[^\w\s]', '', description).split()
         print(description)
         # remove stop words and make embbedings vector
-        filtered_text = [model.wv[t] for t in description if not t in stopwords.words("english")]
+        description = [model.wv[t] for t in description if not t in stopwords.words("english")]
         if len(description) < WINDOW_SIZE:
-            description.extend(['0' for _ in range(WINDOW_SIZE - len(description))])
+            description.extend([0 for _ in range(WINDOW_SIZE - len(description))])
         else:
             description = description[:WINDOW_SIZE]
         padded_descriptions.append(description)
