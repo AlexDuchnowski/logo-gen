@@ -48,6 +48,7 @@ def cluster_images(images):
         np.append(extracted_images, extracted_image_batch)
         count += 128
         print(f"extracted {count}")
+        image_batch = next(images)
     print("extracted all")
     # Fit then apply pply sklearn PCA reduction to extracted images
     reduction = PCA(n_components=64)
