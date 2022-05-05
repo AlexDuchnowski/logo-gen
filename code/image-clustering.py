@@ -1,5 +1,6 @@
 from tensorflow.keras.applications.resnet_v2 import ResNet50V2, preprocess_input
 from tensorflow.keras.models import Model
+import tensorflow_transform as tft
 import tensorflow as tf
 import numpy as np
 
@@ -12,7 +13,7 @@ def extractResNetFeatures(images):
     image in the dataset.
 
     :param images: 4D input image data with shape (n, 224, 224, 3)
-    :return 2D features vector output with shape (n, 2048)
+    :return 2D features vector output as numpy array with shape (n, 2048)
     """
     # convert RGB to BGR and normalize each channel to fit the ImageNet dataset
     inputs = preprocess_input(images)
@@ -28,6 +29,9 @@ def extractResNetFeatures(images):
     return customized_model.predict(inputs)
 
 
-images = np.random.normal(128, 40, (4000,224,224,3))
-feature_vectors = extractResNetFeatures(images)
+
+images = np.random.normal(128, 40, (50,224,224,3))
+extracted_images = extractResNetFeatures(images)
+reduced_images = tft.pca(extracted_images, 128)
+
 
