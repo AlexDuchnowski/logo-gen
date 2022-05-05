@@ -69,7 +69,9 @@ def process_descriptions(descriptions):
         # remove stop words and make embbedings vector
         for word in description:
             if word not in word_vectors:
-                print(word)
+                print(f'not in: {word}')
+            else:
+                print(f'in: {word}')
         description = [model.wv[t] for t in description if not t in stopwords.words("english") and t in word_vectors]
         if len(description) < WINDOW_SIZE:
             description.extend([0 for _ in range(WINDOW_SIZE - len(description))])
