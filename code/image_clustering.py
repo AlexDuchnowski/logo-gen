@@ -39,7 +39,7 @@ def cluster_images(images):
     """
     # Apply ResNet feature extraction to each batch
     image_batch = next(images)
-    extracted_images = np.array([])
+    extracted_images = np.array([[]])
     count = 0
     while True:
         print(type(image_batch))
@@ -52,7 +52,7 @@ def cluster_images(images):
             image_batch = next(images)
         except StopIteration as e:
             break
-        
+
     print("extracted all")
     # Fit then apply pply sklearn PCA reduction to extracted images
     reduction = PCA(n_components=64)
