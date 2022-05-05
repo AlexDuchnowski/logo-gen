@@ -64,9 +64,7 @@ def process_descriptions(descriptions):
         description = translator.translate(desc).text
         # remove the punctuation
         description = re.sub(r'[^\w\s]', '', description).lower()
-        print(description)
         description = word_tokenize(description)
-        print(description)
         # remove stop words and make embbedings vector
         description = [model.wv[t] for t in description if not t in stopwords.words("english")]
         if len(description) < WINDOW_SIZE:
@@ -92,7 +90,7 @@ def process_names(names):
         padded_names.append(ascii)
     return tf.convert_to_tensor(padded_names)
 
-
+print(model.wv['propstack'])
 gen = make_input_generator('LLD-logo.hdf5', 128, epochs=1)
 images, descriptions, names = next(gen)
 print(images)
