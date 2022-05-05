@@ -36,7 +36,7 @@ def make_input_generator(data_file_path, batch_size, epochs):
 
 def process_images(images):
     # resizing and normalization of pixel values for images
-    images = tf.image.resize(images, [64, 64])
+    images = tf.image.resize(images, [224, 224])
     images = tf.cast(images, tf.float32) / 255
     return images
 
