@@ -3,7 +3,8 @@ import h5py
 import tensorflow as tf
 import matplotlib.pyplot as plt
 import json
-import googletrans 
+import googletrans
+from image_clustering import cluster_image 
 
 WINDOW_SIZE = 30
 

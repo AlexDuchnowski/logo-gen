@@ -36,17 +36,21 @@ def cluster_images(images):
     :param images: Generater/Dataset of 4D input image data with shape (n, 224, 224, 3)
     :return numpy array including the cluster indices for images
     """
+    # Apply ResNet feature extraction to each batch
     image_batch = next(images)
     extracted_images = np.array([])
     while image_batch is not None:
         extracted_image_batch = extract_resnet_features(images)
         np.append(extracted_images, extracted_image_batch)
 
+    # Fit then apply pply sklearn PCA reduction to extracted images
     reduction = PCA(n_components=64)
     reduced_images = reduction.fit_transform(extracted_images)
 
+    # Fit then make clusters for reduced images using kmeans
     classifier = Kmeans(num_clusters=16)
     classifier.train(reduced_images)
     image_clusters = classifier.predict(reduced_images)
 
+    # Return the clusters with same indices as image data
     return image_clusters
