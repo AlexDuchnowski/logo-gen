@@ -58,6 +58,7 @@ def process_descriptions(descriptions):
     translator = googletrans.Translator()
     padded_descriptions = []
     model = Word2Vec.load("word2vec.model")
+    word_vectors = model.wv
 
     for desc in descriptions:
         # translate the different text to English
@@ -66,7 +67,7 @@ def process_descriptions(descriptions):
         description = re.sub(r'[^\w\s]', '', description).lower()
         description = word_tokenize(description)
         # remove stop words and make embbedings vector
-        description = [model.wv[t] for t in description if not t in stopwords.words("english") and t in model.wv.vocab]
+        description = [model.wv[t] for t in description if not t in stopwords.words("english") and t in word_vectors.keys]
         if len(description) < WINDOW_SIZE:
             description.extend([0 for _ in range(WINDOW_SIZE - len(description))])
         else:
