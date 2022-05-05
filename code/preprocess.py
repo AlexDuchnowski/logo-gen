@@ -3,7 +3,14 @@ import h5py
 import tensorflow as tf
 import matplotlib.pyplot as plt
 import json
+
 import googletrans 
+from gensim.models import Word2Vec
+from gensim.test.utils import common_texts
+import logging
+model = Word2Vec(sentences=common_texts, vector_size=100, window=5, min_count=1, workers=4)
+model.save("word2vec.model")
+model = Word2Vec.load("word2vec.model")
 
 WINDOW_SIZE = 30
 
@@ -45,6 +52,7 @@ def process_descriptions(descriptions):
     # REPLACE WITH REAL PREPROCESSING
     translator = googletrans.Translator()
     padded_descriptions = []
+    model = Word2Vec.load("word2vec.model")
     for desc in descriptions:
         # TRANSLATE HERE - ignore this placeholder stuff
         lengths = translator.translate(desc).text.lower().split()
@@ -68,9 +76,10 @@ def process_names(names):
             ascii = ascii[:WINDOW_SIZE]
         padded_names.append(ascii)
     return tf.convert_to_tensor(padded_names)
-
-gen = make_input_generator('LLD-logo.hdf5', 128, epochs=1)
-images, descriptions, names = next(gen)
+vector = model.wv['computer']
+print(vector)
+# gen = make_input_generator('LLD-logo.hdf5', 128, epochs=1)
+# images, descriptions, names = next(gen)
 # print(images)
 # print(descriptions)
 # print(names)

@@ -5,6 +5,7 @@ import random
 class Kmeans(object):
     """
     K-Means Classifier via Iterative Improvement
+
     @attrs:
         k: The number of clusters to form as well as the number of centroids to
            generate (default = 10), an int
@@ -17,7 +18,7 @@ class Kmeans(object):
         centroids: a Numpy array where each element is one of the k cluster centers
     """
 
-    def __init__(self, num_clusters = 16, max_iter = 1000, threshold = 1e-3):
+    def __init__(self, num_clusters = 16, max_iter = 1000, threshold = 1e-6):
         """
         Initiate K-Means with some parameters
         """
@@ -35,11 +36,15 @@ class Kmeans(object):
         prev_centroids = curr_centroids
         iter = 0
         while(iter < self.max_iter):
+            # assigning cluster for each images
             assigned_data = np.array([np.argmin(np.sum(np.square(curr_centroids-x), axis=1)) for x in X])
+            # 
             curr_centroids = np.array([np.average(X[np.where(assigned_data==i)],axis=0) for i in range(self.k)])
             if (np.linalg.norm(curr_centroids-prev_centroids)/np.linalg.norm(prev_centroids) < self.tol):
                 break
             prev_centroids = curr_centroids
+            iter += 1
+            print(f"kmeans iteration number {iter} done")
         self.centroids = curr_centroids
 
     def predict(self, X):
