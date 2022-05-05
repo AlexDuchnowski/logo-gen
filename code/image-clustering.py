@@ -5,9 +5,7 @@ import tensorflow as tf
 import numpy as np
 from kmeans import Kmeans
 
-
-
-def extractResNetFeatures(images):
+def extract_resnet_features(images):
     """
     Extract the output of the final pooling layer from the ResNet50V2 network with 
     pretrained weights from ImageNet to get a 2048-dimensional feature vector for each
@@ -29,15 +27,26 @@ def extractResNetFeatures(images):
     # return the feature vectors output
     return customized_model.predict(inputs)
 
+def cluster_images(images):
+    """
+    Extract the output of the final pooling layer from the ResNet50V2 network with 
+    pretrained weights from ImageNet to get a 2048-dimensional feature vector for each
+    image in the dataset.
 
-images = np.random.normal(128, 40, (32,224,224,3))
-print("initialize done")
-extracted_images = extractResNetFeatures(images)
-print("resnet done")
-reduced_images = PCA(extracted_images, 128)
-print("pca done")
-classifier = Kmeans(num_clusters=32)
-classifier.train(reduced_images)
-print("kmeans train done")
-image_clusters = classifier.predict(reduced_images)
-print(image_clusters)
+    :param images: Generater/Dataset of 4D input image data with shape (n, 224, 224, 3)
+    :return numpy array including the cluster indices for images
+    """
+    image_batch = next(images)
+    extracted_images = np.array([])
+    while image_batch is not None:
+        extracted_image_batch = extract_resnet_features(images)
+        np.append(extracted_images, extracted_image_batch)
+
+    reduction = PCA(n_components=64)
+    reduced_images = reduction.fit_transform(extracted_images)
+
+    classifier = Kmeans(num_clusters=16)
+    classifier.train(reduced_images)
+    image_clusters = classifier.predict(reduced_images)
+
+    return image_clusters
