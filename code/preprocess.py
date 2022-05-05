@@ -68,7 +68,7 @@ def process_descriptions(descriptions):
         description = word_tokenize(description)
         print(description)
         # remove stop words and make embbedings vector
-        model.wv["Propstack"]
+        model.wv['computer']
         description = [model.wv[t] for t in description if not t in stopwords.words("english")]
         if len(description) < WINDOW_SIZE:
             description.extend([0 for _ in range(WINDOW_SIZE - len(description))])
