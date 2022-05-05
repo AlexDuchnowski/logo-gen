@@ -3,13 +3,14 @@ import h5py
 import tensorflow as tf
 import matplotlib.pyplot as plt
 import json
+
 import googletrans 
-from gensim.models import word2vec
+from gensim.models import Word2Vec
 import logging
-logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
-sentences = word2vec.Text8Corpus('text8')
-# size here should be the embedding size
-model = word2vec.Word2Vec(sentences, size=200)
+model = Word2Vec(sentences=common_texts, vector_size=100, window=5, min_count=1, workers=4)
+model.save("word2vec.model")
+model = Word2Vec.load("word2vec.model")
+
 WINDOW_SIZE = 30
 
 def make_input_generator(data_file_path, batch_size, epochs):
@@ -41,7 +42,7 @@ def make_input_generator(data_file_path, batch_size, epochs):
 
 def process_images(images):
     # resizing and normalization of pixel values for images
-    images = tf.image.resize(images, [64, 64])
+    images = tf.image.resize(images, [224, 224])
     images = tf.cast(images, tf.float32) / 255
     return images
 
@@ -50,6 +51,7 @@ def process_descriptions(descriptions):
     # REPLACE WITH REAL PREPROCESSING
     translator = googletrans.Translator()
     padded_descriptions = []
+    model = Word2Vec.load("word2vec.model")
     for desc in descriptions:
         # TRANSLATE HERE - ignore this placeholder stuff
         lengths = translator.translate(desc).text.lower().split()
@@ -73,9 +75,10 @@ def process_names(names):
             ascii = ascii[:WINDOW_SIZE]
         padded_names.append(ascii)
     return tf.convert_to_tensor(padded_names)
-
-gen = make_input_generator('LLD-logo.hdf5', 128, epochs=1)
-images, descriptions, names = next(gen)
+vector = model.wv['computer']
+print(vector)
+# gen = make_input_generator('LLD-logo.hdf5', 128, epochs=1)
+# images, descriptions, names = next(gen)
 # print(images)
 # print(descriptions)
 # print(names)
