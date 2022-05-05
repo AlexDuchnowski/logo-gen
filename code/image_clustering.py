@@ -24,7 +24,7 @@ def extract_resnet_features(images):
     # make customized model with final_pooling as last layer
     customized_model = Model(inputs=resnet_model.input, outputs=final_pooling)
     # print out the summary of the model
-    customized_model.summary()
+    #customized_model.summary()
     # return the feature vectors output
     return customized_model.predict(inputs)
 
@@ -43,14 +43,17 @@ def cluster_images(images):
     while image_batch is not None:
         extracted_image_batch = extract_resnet_features(images)
         np.append(extracted_images, extracted_image_batch)
-
+        print("extracted batch")
+    print("extracted all")
     # Fit then apply pply sklearn PCA reduction to extracted images
     reduction = PCA(n_components=64)
     reduced_images = reduction.fit_transform(extracted_images)
+    print("reduced all")    
 
     # Fit then make clusters for reduced images using kmeans
     classifier = Kmeans(num_clusters=16)
     classifier.train(reduced_images)
+    print("done kmeans trainning")
     image_clusters = classifier.predict(reduced_images)
 
     # Return the clusters with same indices as image data
@@ -71,5 +74,7 @@ def makeImageGenerator(data_file_path, batch_size, max_epoch=10):
             images = tf.cast(images, tf.float32) / 255
             yield images
 
-gen = makeImageGenerator('LLD-logo.hdf5', 64)
+gen = makeImageGenerator('LLD-logo.hdf5', 128)
+print("generator done")
 clusters = cluster_images(gen)
+print(clusters[:100])
