@@ -59,6 +59,7 @@ def process_descriptions(descriptions):
     padded_descriptions = []
     model = Word2Vec.load("word2vec.model")
     word_vectors = model.wv
+    print(word_vectors)
 
     for desc in descriptions:
         # translate the different text to English
