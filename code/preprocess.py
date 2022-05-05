@@ -67,7 +67,7 @@ def process_descriptions(descriptions):
         description = re.sub(r'[^\w\s]', '', description).lower()
         description = word_tokenize(description)
         # remove stop words and make embbedings vector
-        for word in descriptions:
+        for word in description:
             if word not in word_vectors:
                 print(word)
         description = [model.wv[t] for t in description if not t in stopwords.words("english") and t in word_vectors]
