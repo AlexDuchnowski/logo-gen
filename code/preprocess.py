@@ -91,7 +91,7 @@ def process_names(names):
             ascii = ascii[:WINDOW_SIZE]
         padded_names.append(ascii)
     return tf.convert_to_tensor(padded_names)
-print(model.wv["music"])
+print(model.wv["computer"])
 # gen = make_input_generator('LLD-logo.hdf5', 128, epochs=1)
 # images, descriptions, names = next(gen)
 # print(images)
