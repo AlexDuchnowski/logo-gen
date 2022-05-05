@@ -42,8 +42,6 @@ def cluster_images(images):
     extracted_images = None
     count = 0
     while True:
-        print(type(image_batch))
-        print(image_batch.shape)
         extracted_image_batch = extract_resnet_features(image_batch)
         if extracted_images is None:
             extracted_images = extracted_image_batch
@@ -72,7 +70,7 @@ def cluster_images(images):
     return image_clusters
 
 def makeImageGenerator(data_file_path, batch_size, max_epoch=10):
-    hdf5_file = h5py.File(data_file_path, 'r')['data'][:1000]
+    hdf5_file = h5py.File(data_file_path, 'r')['data']
     epoch = 0
     while epoch < max_epoch:
         epoch += 1
@@ -84,8 +82,6 @@ def makeImageGenerator(data_file_path, batch_size, max_epoch=10):
             images = tf.image.resize(images, [224, 224])
             images = tf.cast(images, tf.float32) / 255
             yield images
-            print(i)
-        print("e done")
 
 gen = makeImageGenerator('LLD-logo.hdf5', 128, 1)
 print("generator done")
