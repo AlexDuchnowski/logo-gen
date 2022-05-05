@@ -62,11 +62,11 @@ def process_descriptions(descriptions):
     for desc in descriptions:
         # translate the different text to English
         description = translator.translate(desc).text
-        # tokenize the word
+        # remove the punctuation
+        description = re.sub(r'[^\w\s]', '', description)
+        print(description)
         description = word_tokenize(description)
         print(description)
-        # remove the punctuation
-        description = re.sub(r'[^\w\s]', '', description).split()
         # remove stop words and make embbedings vector
         description = [model.wv[t] for t in description if not t in stopwords.words("english")]
         if len(description) < WINDOW_SIZE:
