@@ -41,7 +41,7 @@ def cluster_images(images):
     image_batch = next(images)
     extracted_images = np.array([])
     while image_batch is not None:
-        extracted_image_batch = extract_resnet_features(images)
+        extracted_image_batch = extract_resnet_features(image_batch)
         np.append(extracted_images, extracted_image_batch)
         print("extracted batch")
     print("extracted all")
