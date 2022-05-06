@@ -51,7 +51,8 @@ def cluster_images(images, num_clusters=16):
             np.append(extracted_images, extracted_image_batch, axis=0)
         print(extracted_images.shape)
         print(f"extracted {count}")
-        break
+        if (count > 256):
+            break
         try:
             image_batch = next(images)
         except StopIteration as e:
@@ -69,7 +70,7 @@ def cluster_images(images, num_clusters=16):
     classifier = Kmeans(num_clusters=num_clusters)
     classifier.train(reduced_images)
     print("done kmeans trainning")
-    image_clusters = classifier.predict(reduced_images)
+    image_clusters = np.reshape(classifier.predict(reduced_images), (-1,1))
     print(image_clusters.shape)
 
     # Return the clusters with same indices as image data
