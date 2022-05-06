@@ -49,7 +49,6 @@ def cluster_images(images, num_clusters=16):
             extracted_images = extracted_image_batch
         else:
             extracted_images = np.append(extracted_images, extracted_image_batch, axis=0)
-        print(extracted_images.shape)
         print(f"extracted {count}")
         if (count > 256):
             break
@@ -58,13 +57,11 @@ def cluster_images(images, num_clusters=16):
         except StopIteration as e:
             break
 
-    print("extracted all")
-    print(extracted_images.shape)
+    print(f"ResNet extraction done with shape {extracted_images.shape}")
     # Fit then apply pply sklearn PCA reduction to extracted images
     reduction = PCA(n_components=64)
     reduced_images = reduction.fit_transform(extracted_images)
-    print("reduced all")    
-    print(reduced_images.shape)
+    print(f"PCA reduction done with shape {reduced_images.shape}")    
 
     # Fit then make clusters for reduced images using kmeans
     classifier = Kmeans(num_clusters=num_clusters)
@@ -93,5 +90,5 @@ def makeImageGenerator(data_file_path, batch_size, max_epoch=10):
 
 gen = makeImageGenerator('LLD-logo.hdf5', 128, 1)
 clusters = cluster_images(gen, num_clusters=64)
-print(clusters[:100])
+print(clusters)
 np.savetxt("../clusters_data.csv", cluster_images, delimiter=",")
