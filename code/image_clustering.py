@@ -44,11 +44,12 @@ def cluster_images(images, num_clusters=16):
     count = 0
     while True:
         extracted_image_batch = extract_resnet_features(image_batch)
+        count += extracted_image_batch.shape[0]
+        print(extracted_images.shape)
         if extracted_images is None:
             extracted_images = extracted_image_batch
         else:
-            np.append(extracted_images, extracted_image_batch)
-        count += 128
+            np.append(extracted_images, extracted_image_batch, axis=0)
         print(f"extracted {count}")
         try:
             image_batch = next(images)
@@ -68,7 +69,7 @@ def cluster_images(images, num_clusters=16):
     classifier.train(reduced_images)
     print("done kmeans trainning")
     image_clusters = classifier.predict(reduced_images)
-    print(image_clusters.shape)
+    print(np.array(image_clusters).shape)
 
     # Return the clusters with same indices as image data
     return image_clusters
