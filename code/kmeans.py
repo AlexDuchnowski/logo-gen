@@ -54,4 +54,4 @@ class Kmeans(object):
         :param X: A dataset as a 2D Numpy array
         :return: A Numpy array of predicted clusters
         """
-        return [np.argmin(np.sum(np.square(self.centroids-x), axis=1)) for x in X]
+        return np.array([np.argmin(np.sum(np.square(self.centroids-x), axis=1)) for x in X])

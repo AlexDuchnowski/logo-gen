@@ -70,8 +70,7 @@ def cluster_images(images, num_clusters=16):
     classifier.train(reduced_images)
     print("done kmeans trainning")
     image_clusters = classifier.predict(reduced_images)
-    print(type(image_clusters))
-    print(np.array(image_clusters).shape)
+    print(image_clusters.shape)
 
     # Return the clusters with same indices as image data
     return image_clusters
