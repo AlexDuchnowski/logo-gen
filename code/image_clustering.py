@@ -48,7 +48,7 @@ def cluster_images(images, num_clusters=16):
         if extracted_images is None:
             extracted_images = extracted_image_batch
         else:
-            np.append(extracted_images, extracted_image_batch, axis=0)
+            extracted_images = np.append(extracted_images, extracted_image_batch, axis=0)
         print(extracted_images.shape)
         print(f"extracted {count}")
         if (count > 256):
