@@ -50,8 +50,6 @@ def cluster_images(images, num_clusters=16):
         else:
             extracted_images = np.append(extracted_images, extracted_image_batch, axis=0)
         print(f"extracted {count}")
-        if (count > 256):
-            break
         try:
             image_batch = next(images)
         except StopIteration as e:
@@ -90,5 +88,4 @@ def makeImageGenerator(data_file_path, batch_size, max_epoch=10):
 
 gen = makeImageGenerator('LLD-logo.hdf5', 128, 1)
 clusters = cluster_images(gen, num_clusters=64)
-print(clusters)
-np.savetxt("../clusters_data.csv", cluster_images, delimiter=",")
+np.savetxt("../clusters_data.csv", clusters, delimiter=",")
