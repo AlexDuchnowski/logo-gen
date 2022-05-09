@@ -153,7 +153,7 @@ def cluster_images(images, num_clusters=16):
     # Return the clusters with same indices as image data
     return np.array(image_clusters)
 
-data_file_path = '/LLD-icon.hdf5'
+data_file_path = '../LLD-icon.hdf5'
 gen = makeImageGenerator(data_file_path, 512, 1)
 n_clusters = [4,6,8,10,12,16,24,32,64]
 clusters = cluster_images(gen, num_clusters=n_clusters)
