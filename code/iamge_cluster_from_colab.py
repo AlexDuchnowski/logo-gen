@@ -23,7 +23,7 @@ class Kmeans(object):
         centroids: a Numpy array where each element is one of the k cluster centers
     """
 
-    def __init__(self, num_clusters = 16, max_iter = 2000, threshold = 1e-7):
+    def __init__(self, num_clusters = 16, max_iter = 2000, threshold = 1e-8):
         """
         Initiate K-Means with some parameters
         """
