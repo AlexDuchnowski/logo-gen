@@ -61,7 +61,7 @@ class Kmeans(object):
             for i in range(m):
                 temp_data.append(hq.heappop(pq)[1])
             closest_data.append(temp_data)
-        np.savetxt(f"/icon-clusters/{self.k}_best_clusters_data.csv", closest_data, delimiter=",")
+        np.savetxt(f"icon-clusters/{self.k}_best_clusters_data.csv", closest_data, delimiter=",")
         print(f"save best clusters image for {self.k}")
 
     def predict(self, X):
@@ -153,10 +153,10 @@ def cluster_images(images, num_clusters=16):
     # Return the clusters with same indices as image data
     return np.array(image_clusters)
 
-data_file_path = '/LLD-icon-data.hdf5'
+data_file_path = 'LLD-icon-data.hdf5'
 gen = makeImageGenerator(data_file_path, 512, 1)
 n_clusters = [4,6,8,10,12,16,24,32,64]
 clusters = cluster_images(gen, num_clusters=n_clusters)
 for i in range(len(n_clusters)):
     n = n_clusters[i]
-    np.savetxt(f"/icon-clusters/{n}_clusters_data.csv", clusters[i], delimiter=",")
+    np.savetxt(f"icon-clusters/{n}_clusters_data.csv", clusters[i], delimiter=",")
