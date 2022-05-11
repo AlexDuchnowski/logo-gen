@@ -1,13 +1,5 @@
 # logo-gen
-preprocess:
-for the text descrption:
-2d tensor: n: numbers of company, length of description (list) (30) cut off at 30
-when it is not long enough, fill in padding
 
-2d: name, n* names
+This code (logo_gen_icon_dcgan.ipynb) was written to be run in our Colab environment and relies on files in a mounted Google Drive, so it will likely not run locally.
 
-## Resources
-
-https://keras.io/examples/generative/wgan_gp/
-
-
+Link to Colab: https://colab.research.google.com/drive/1Bq9BCJK5YVnNKc1zlMuOYae0IM8-MTo7?usp=sharing

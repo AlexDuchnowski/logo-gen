@@ -1,11 +1,5 @@
 # Project-specific files
-LLD-icon/
-images/
-LLD*.*
-logo_env/
-LLDsample/
-*.png
-*.jpg
+LLD-icon.hdf5
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
